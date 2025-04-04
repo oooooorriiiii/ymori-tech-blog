@@ -1,16 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
 import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
+import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
+import rehypeKatex from 'rehype-katex';
 import rehypePrettyCode from 'rehype-pretty-code';
-import { use } from 'react';
+import rehypeStringify from 'rehype-stringify';
+
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
+/* eslint @typescript-eslint/no-explicit-any: 0 */
 export interface PostData {
   id: string;
   title: string;
@@ -65,15 +68,19 @@ export async function getPostData(id: string): Promise<PostContent> {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  const processedContent = await remark()
+  const processor = await unified()
+    .use(remarkParse)
     .use(remarkMath)
+    .use(remarkRehype, {allowDangerousHtml: true})
+    .use(rehypeRaw)
     .use(rehypeKatex)
     .use(rehypePrettyCode, {
         theme: 'monokai',
         keepBackground: false,
     })
-    .use(html)
-    .process(matterResult.content);
+    .use(rehypeStringify)
+
+  const processedContent = await processor.process(matterResult.content);
   const contentHtml = processedContent.toString();
 
   return {

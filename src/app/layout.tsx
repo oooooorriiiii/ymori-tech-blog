@@ -27,7 +27,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
-        <div className="max-w-3xl mx-auto px-4 py-10"> {/* コンテナ */}
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12"> {/* コンテナ */}
           <header className="mb-10">
             <h1 className="text-4xl font-bold mb-2">
               <Link href="/">My Tech Blog</Link>

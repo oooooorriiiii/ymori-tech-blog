@@ -1,16 +1,12 @@
-import { getAllPostIds, getPostData, PostContent } from '../../lib/posts'; // 関数をインポート
-import { ParsedUrlQuery } from 'querystring';
-import { GetStaticPaths, GetStaticProps } from 'next'; // 型定義は参考 (App Router では不要)
+import { getAllPostIds, getPostData, PostContent } from '../../lib/posts';
 
 interface PostProps {
-  params: {
-    slug: string;
-  };
-}
+  params: Promise<{ slug: string }>;
+};
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const paths = getAllPostIds();
-  return paths.map(p => ({ slug: p.params.slug }));
+  return paths.map(({ params }) => ({ slug: params.slug }));
 }
 
 export default async function Post({ params }: PostProps) {

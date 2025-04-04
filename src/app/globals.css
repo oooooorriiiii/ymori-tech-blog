@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
   --background: #ffffff;
@@ -16,13 +17,6 @@
   --shiki-token-link: theme('colors.indigo.600');
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 html.dark {
   --shiki-color-text: theme('colors.gray.100'); /* Dark mode text */
   --shiki-color-background: theme('colors.gray.800'); /* Dark mode background */
@@ -30,29 +24,12 @@ html.dark {
   --shiki-token-string: theme('colors.green.300');
   --shiki-token-comment: theme('colors.gray.400');
   --shiki-token-keyword: theme('colors.purple.400');
-  --shiki-token-parameter: theme('colors.orange.300');
-  --shiki-token-function: theme('colors.pink.400');
-  --shiki-token-string-expression: theme('colors.teal.300');
-  --shiki-token-punctuation: theme('colors.gray.300');
-  --shiki-token-link: theme('colors.indigo.400');
-   /* Add more dark mode variables */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --shiki-color-text: theme('colors.gray.900'); /* Light mode text */
-    --shiki-color-background: theme('colors.gray.100'); /* Light mode background */
-    --shiki-token-constant: theme('colors.blue.600');
-    --shiki-token-string: theme('colors.green.700');
-    --shiki-token-comment: theme('colors.gray.500');
-    --shiki-token-keyword: theme('colors.purple.600');
-    --shiki-token-parameter: theme('colors.orange.600');
-    --shiki-token-function: theme('colors.pink.600');
-    --shiki-token-string-expression: theme('colors.teal.600');
-    --shiki-token-punctuation: theme('colors.gray.700');
-    --shiki-token-link: theme('colors.indigo.600');
   }
 }
 
@@ -60,7 +37,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  @apply transition-colors duration-300;
 }
 
 /* rehype-pretty-code が生成する要素へのスタイル */
@@ -78,4 +54,14 @@ pre code .line {
 
 .prose pre {
   @apply bg-gray-800 text-white p-4 rounded-md overflow-x-auto;
+}
+
+.katex-html {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
 }
