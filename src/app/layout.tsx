@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
+import ThemeToggle from './components/ThemeToggle';
 import './globals.css';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <head>
         {/* KaTeX CSS を読み込み */}
         <link
@@ -27,22 +29,25 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12"> {/* コンテナ */}
-          <header className="mb-10">
-            <h1 className="text-4xl font-bold mb-2">
-              <Link href="/">My Tech Blog</Link>
-            </h1>
-            <nav>
-              {/* ナビゲーションリンクなど */}
-              <Link href="/blog" className="mr-4 hover:underline">Blog Home</Link>
-              {/* <Link href="/about" className="hover:underline">About</Link> */}
-            </nav>
-          </header>
-          <main>{children}</main> {/* メインコンテンツ */}
-          <footer className="mt-10 pt-5 border-t border-gray-300 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} My Tech Blog
-          </footer>
-        </div>
+        <Providers>
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12"> {/* コンテナ */}
+            <header className="mb-10 flex justify-between items-center">
+              <div>
+                <h1 className="text-4xl font-bold mb-2">
+                  <Link href="/">My Tech Blog</Link>
+                </h1>
+                <nav>
+                  <Link href="/blog" className="mr-4 hover:underline">Blog Home</Link>
+                </nav>
+              </div>
+              <ThemeToggle />
+            </header>
+            <main>{children}</main> {/* メインコンテンツ */}
+            <footer className="mt-10 pt-5 border-t border-gray-300 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+              © {new Date().getFullYear()} My Tech Blog
+            </footer>
+          </div>
+        </Providers>
       </body>
     </html>
   );

@@ -1,6 +1,8 @@
 ---
 title: 'First Post'
 date: '2025-04-04'
+tags: ['paper']
+excerpt: 'This is test page'
 auther: 'ymori'
 ---
 
